@@ -1,0 +1,42 @@
+body, h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1, .subheading {
+    font-family: "Noto Sans TC", sans-serif;
+    text-transform: none;
+}
+
+h2 {
+    text-transform: uppercase;
+}
+
+:root {
+    --bs-primary-rgb: 174,198,207;
+    --bs-link-color: rgb(150,180,190);
+    --bs-link-hover-color: rgb(130,160,170);
+}
+
+.social-icons .social-icon:hover {
+    background-color: rgb(179,158,181);
+}
+
+.resume-section {
+    background-color: rgb(255,250,240);
+}
+
+h1 {
+    font-size: 3.5rem !important; 
+}
+
+h2 {
+    font-size: 2rem !important;
+}
+
+h1 {
+    color: rgb(179,216,190) !important;
+}
+
+h2 {
+    color: rgb(179,216,190) !important;
+}
+
+h3 {
+    color: rgb(179,216,190) !important;
+}

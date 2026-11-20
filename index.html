@@ -258,7 +258,7 @@
   </footer>
 
   <script>
-    // ================= 1. 完整行程資料庫 =================
+    // ================= 1. 完整行程資料庫（已依颱風外圍環流調整 8/06 與 8/10 對調） =================
     const itineraryData = [
       {
         id: "0714",
@@ -399,17 +399,19 @@
       },
       {
         id: "0806",
-        dateLabel: "08/06 Day 9",
+        dateLabel: "08/06 Day 9（已調整）",
         fullDate: "116年8月06日（五）",
-        title: "【帛琉海域周邊人文生態體察 I】傳統 BUL 垂釣文化體驗",
-        badge: "傳統治理 G",
-        badgeColor: "bg-teal-100 text-teal-800",
-        sdgs: ["SDG 14 海洋生態"],
-        locationName: "洛克群島傳統漁場海域",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=Rock+Islands+Southern+Lagoon+Palau",
+        alertNotice: "⚠️ 因海況不佳，行程已調整（颱風外圍環流船班停駛，改為陸域生態調查，原海域行程調整至 8/10）",
+        title: "永續生態田野調查：帛琉當地特有種鳥類與生態解析（原 8/10 行程對調）",
+        badge: "生物多樣性（行程調整）",
+        badgeColor: "bg-rose-100 text-rose-800",
+        sdgs: ["SDG 15 陸域生態"],
+        locationName: "帛琉自然保護區與森林步道",
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Palau+Conservation+Society",
         details: [
-          "洛克群島海域探勘與傳統 BUL 垂釣文化體驗。",
-          "深入理解帛琉傳統「Bul 禁漁制度」如何透過社區共治實現海洋資源永續。"
+          "因應颱風外圍環流影響，洛克群島船班停駛，本日調整為陸上保護區田野調查。",
+          "進行帛琉當地特有種鳥類與森林生態之田野調查與專業解析。",
+          "運用「五感永續地圖」記錄鳥類棲地保育現況。"
         ]
       },
       {
@@ -459,17 +461,17 @@
       },
       {
         id: "0810",
-        dateLabel: "08/10 Day 13",
+        dateLabel: "08/10 Day 13（對調行程）",
         fullDate: "116年8月10日（二）",
-        title: "永續生態田野調查：帛琉當地特有種鳥類與生態解析",
-        badge: "生物多樣性",
-        badgeColor: "bg-emerald-100 text-emerald-800",
-        sdgs: ["SDG 15 陸域生態"],
-        locationName: "帛琉自然保護區與森林步道",
-        mapUrl: "https://www.google.com/maps/search/?api=1&query=Palau+Conservation+Society",
+        title: "【帛琉海域周邊人文生態體察 I】傳統 BUL 垂釣文化體驗（原 8/06 行程對調）",
+        badge: "傳統治理 G",
+        badgeColor: "bg-teal-100 text-teal-800",
+        sdgs: ["SDG 14 海洋生態"],
+        locationName: "洛克群島傳統漁場海域",
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Rock+Islands+Southern+Lagoon+Palau",
         details: [
-          "進行帛琉當地特有種鳥類與森林生態之田野調查與專業解析。",
-          "運用「五感永續地圖」記錄鳥類棲地保育現況。"
+          "待海象平穩後補行洛克群島海域探勘與傳統 BUL 垂釣文化體驗。",
+          "深入理解帛琉傳統「Bul 禁漁制度」如何透過社區共治實現海洋資源永續。"
         ]
       },
       {
@@ -518,7 +520,7 @@
         const isSelected = activeDateId === item.id;
         const btnClass = isSelected
           ? "bg-teal-600 text-white shadow-sm"
-          : "bg-white text-slate-600 hover:bg-sky-50 border border-slate-200";
+          : (item.alertNotice ? "bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200" : "bg-white text-slate-600 hover:bg-sky-50 border border-slate-200");
         html += `<button onclick="selectDate('${item.id}')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition ${btnClass}">${item.dateLabel}</button>`;
       });
 
@@ -532,7 +534,12 @@
         : itineraryData.filter(item => item.id === activeDateId);
 
       container.innerHTML = filtered.map(item => `
-        <article class="bg-white rounded-2xl p-6 shadow-sm border border-sky-100 hover:border-teal-300 transition">
+        <article class="bg-white rounded-2xl p-6 shadow-sm border ${item.alertNotice ? 'border-rose-300 ring-2 ring-rose-100' : 'border-sky-100 hover:border-teal-300'} transition">
+          ${item.alertNotice ? `
+            <div class="mb-4 bg-rose-50 border-l-4 border-rose-600 text-rose-800 px-4 py-3 rounded-r-xl text-sm sm:text-base font-extrabold flex items-center gap-2">
+              <span>${item.alertNotice}</span>
+            </div>
+          ` : ''}
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
             <div>
               <div class="flex flex-wrap items-center gap-2 mb-1.5">
@@ -568,7 +575,7 @@
       renderItinerary();
     }
 
-    // ================= 2. 行前準備清單（支援 LocalStorage 儲存） =================
+    // ================= 2. 行前準備清單（已新增「雨衣／防水袋」並更新儲存版本號以確保立即顯示） =================
     const defaultChecklist = [
       { id: "c1", category: "證件與行政必備", label: "中華民國護照正本（效期須 6 個月以上）", checked: false },
       { id: "c2", category: "證件與行政必備", label: "7/14 銘傳大學基河校區 J616 行前培訓出席", checked: false },
@@ -578,16 +585,17 @@
       { id: "c6", category: "帛琉海洋與永續環保", label: "個人環保水瓶（現場張貼帛琉宣言貼紙使用）", checked: false },
       { id: "c7", category: "帛琉海洋與永續環保", label: "水母衣 / 防磨衣、泳裝與防滑涉水鞋", checked: false },
       { id: "c8", category: "帛琉海洋與永續環保", label: "過膝長褲／有袖上衣（進入傳統 Bai 男人會館禮儀服裝）", checked: false },
+      { id: "c13", category: "帛琉海洋與永續環保", label: "雨衣／防水袋（因應颱風外圍環流與海上陣雨必備）", checked: false },
       { id: "c9", category: "田野調查與角色裝備", label: "永續路徑筆記本與防水書寫文具", checked: false },
       { id: "c10", category: "田野調查與角色裝備", label: "攝影／錄音設備與防水袋（影像控管與微訪談用）", checked: false },
       { id: "c11", category: "田野調查與角色裝備", label: "英語田野實戰破冰句型小卡", checked: false },
       { id: "c12", category: "田野調查與角色裝備", label: "個人常備藥品（暈船藥、腸胃藥、防蚊液）", checked: false }
     ];
 
-    let checklistItems = JSON.parse(localStorage.getItem("palau_checklist_v1")) || defaultChecklist;
+    let checklistItems = JSON.parse(localStorage.getItem("palau_checklist_v2")) || defaultChecklist;
 
     function saveAndRenderChecklist() {
-      localStorage.setItem("palau_checklist_v1", JSON.stringify(checklistItems));
+      localStorage.setItem("palau_checklist_v2", JSON.stringify(checklistItems));
       const container = document.getElementById("checklistContainer");
       const categories = ["證件與行政必備", "帛琉海洋與永續環保", "田野調查與角色裝備"];
 
